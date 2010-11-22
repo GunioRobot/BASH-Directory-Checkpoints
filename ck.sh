@@ -39,8 +39,3 @@ function delck {
         rm -f ~/.ck/$1
     fi
 }
-
-function name_term() {
-    export PS1="\u@\h-$@ $ "
-}
-
