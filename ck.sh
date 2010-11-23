@@ -1,14 +1,15 @@
-mkdir -p ~/.ck
+export CKDIR=${CKDIR-~/.ck}
+mkdir -p $CKDIR
 
 function ck {
     local TAG=${1-default}
     echo "Checkpoint ($TAG) = $PWD"
-    echo $PWD > ~/.ck/$TAG
+    echo $PWD > $CKDIR/$TAG
 }
 
 function gock {
     local TAG=${1-default}
-    local FILE_NAME=~/.ck/$TAG
+    local FILE_NAME=$CKDIR/$TAG
 
     if [ ! -e $FILE_NAME ]; then
         echo $TAG does not exist
@@ -27,8 +28,9 @@ function gock {
 
 function ckck {
     (
+    printf "Matching checkpoints:\n"
     shopt -s nullglob # Executes in a subshell because of this
-    for tag in ~/.ck/*$1*; do
+    for tag in $CKDIR/*$1*; do
         printf "%-20s = %s\n" `basename $tag` `cat $tag`
     done
     )
@@ -37,7 +39,7 @@ function ckck {
 function delck {
     local TAG=$1
     if [ $TAG ]; then
-        rm -f ~/.ck/$TAG
+        rm -f $CKDIR/$TAG
     else
         echo delck requires a tag to delete
     fi

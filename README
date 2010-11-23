@@ -1,5 +1,6 @@
 INSTALLATION:
 Source ck.sh in your ~/.bashrc.  It will create a ~/.ck directory, and it uses this directory to manage tag locations.
+If you would like to store your tags somewhere else, set CKDIR to that location before sourcing ck.sh.
 
 USAGE:
 'ck'                - sets the default tag to current directory
@@ -8,4 +9,4 @@ USAGE:
 'gock $tag'         - changes directory to where the named tag points to
 'ckck'              - lists all tags
 'ckck $partial_tag' - lists all tags that look like $partial_tag
-'delck $tag'        - deletes a named tag
+'delck $tag'        - deletes a named tag.  Does wildcard expansion, so be careful about deleting too many tags
