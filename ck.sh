@@ -30,7 +30,7 @@ function gock {
 
 function ckck {
     for tag in $( ls ~/.ck ); do
-        echo "$tag = `cat ~/.ck/$tag`"
+        printf "%-20s = %s\n" $tag `cat ~/.ck/$tag`
     done
 }
 
