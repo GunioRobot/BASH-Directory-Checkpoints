@@ -1,13 +1,11 @@
 INSTALLATION:
-Source this in your ~/.bashrc.  It will create a ~/.ck directory, and it uses this directory to manage tag locations
+Source ck.sh in your ~/.bashrc.  It will create a ~/.ck directory, and it uses this directory to manage tag locations.
 
 USAGE:
-- 'ck' to set a "default" checkpoint
-- 'ck $tag' to set a named checkpoint
-- 'gock' to go to the "default" checkpoint
-- 'gock $tag'
-- 'ckck' List checkpoints
-- 'delck $tag' to delete a named checkpoint
-
-Todo:
-- 'ckck $partial_tag' to search for matching checkpoints
+'ck'                - sets the default tag to current directory
+'ck $tag'           - sets named tag to current directory
+'gock'              - changes directory to where the default tag points to
+'gock $tag'         - changes directory to where the named tag points to
+'ckck'              - lists all tags
+'ckck $partial_tag' - lists all tags that look like $partial_tag
+'delck $tag'        - deletes a named tag
