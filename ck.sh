@@ -5,6 +5,8 @@ function ck {
     local TAG=${1-default}
     echo "Checkpoint ($TAG) = $PWD"
     echo $PWD > $CKDIR/$TAG
+
+    return 0
 }
 
 function gock {
@@ -13,7 +15,7 @@ function gock {
 
     if [ ! -e $FILE_NAME ]; then
         echo $TAG does not exist
-        return
+        return 1
     fi
 
     local TO_DIR=`cat $FILE_NAME`
@@ -24,6 +26,8 @@ function gock {
     else
         echo "Currently in $PWD"
     fi
+
+    return 0
 }
 
 function ckck {
@@ -33,6 +37,7 @@ function ckck {
     for tag in $CKDIR/*$1*; do
         printf "%-20s = %s\n" `basename $tag` `cat $tag`
     done
+    return 0
     )
 }
 
@@ -40,7 +45,28 @@ function delck {
     local TAG=$1
     if [ $TAG ]; then
         rm -f $CKDIR/$TAG
+        return 0
     else
         echo delck requires a tag to delete
+        return 1
     fi
+}
+
+function ..to() {
+    local ORIGDIR=$PWD
+    local OLDDIR=$PWD
+    local TARGET=$1
+    while [ 1 ]
+    do
+        OLDDIR=$PWD
+        cd ..
+        if [ `basename $PWD` == $TARGET ]; then
+            echo "Currently in $PWD"
+            return 0
+        elif [ $OLDDIR == $PWD ]; then
+            cd $ORIGDIR
+            echo "Unable to find parent directory '$TARGET' in $PWD"
+            return 1
+        fi
+    done
 }

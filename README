@@ -10,3 +10,4 @@ USAGE:
 'ckck'              - lists all tags
 'ckck $partial_tag' - lists all tags that look like $partial_tag
 'delck $tag'        - deletes a named tag.  Does wildcard expansion, so be careful about deleting too many tags
+'..to $some_dir'    - Changes directory to the first parent directory named '$some_dir'
