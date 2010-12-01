@@ -1,13 +1,60 @@
+OVERVIEW:
+Tag directories for quick shell navigation, even across shell sessions and restarts.
+
 INSTALLATION:
-Source ck.sh in your ~/.bashrc.  It will create a ~/.ck directory, and it uses this directory to manage tag locations.
-If you would like to store your tags somewhere else, set CKDIR to that location before sourcing ck.sh.
+Source ck.sh in your ~/.bashrc or ~/.bash_profile.  It automatically creates a ~/.ck directory unless
+instructed otherwise.
 
 USAGE:
-'ck'                - sets the default tag to current directory
-'ck $tag'           - sets named tag to current directory
-'gock'              - changes directory to where the default tag points to
-'gock $tag'         - changes directory to where the named tag points to
-'ckck'              - lists all tags
-'ckck $partial_tag' - lists all tags that look like $partial_tag
-'delck $tag'        - deletes a named tag.  Does wildcard expansion, so be careful about deleting too many tags
-'..to $some_dir'    - Changes directory to the first parent directory named '$some_dir'
+'ck'                 - sets the default tag to current directory
+'ck $tag' [dir=$PWD] - sets named tag to the specified directory (default current directory)
+'gock'               - changes directory to where the default tag points to
+'gock $tag'          - changes directory to where the named tag points to
+'ckck'               - lists all tags
+'ckck $partial_tag'  - lists all tags that look like $partial_tag
+'delck $tag'         - deletes a named tag.  Does wildcard expansion, so be careful about deleting too many tags
+'..to $some_dir'     - Changes directory to the first parent directory named '$some_dir'
+
+USAGE EXAMPLE:
+$ pwd
+/home/juser/src/postgresql-current/src/backend/optimizer/plan
+$ ck
+Checkpoint (default) = /home/juser/src/postgresql-current/src/backend/optimizer/plan
+$ ck plan
+Checkpoint (plan) = /home/juser/src/postgresql-current/src/backend/optimizer/plan
+$ cd
+$ pwd
+/home/juser
+$ gock pg
+Currently in /home/juser/src/postgresql-clean
+$ gock plan
+Currently in /home/juser/src/postgresql-current/src/backend/optimizer/plan
+$ cd - && pwd
+/home/juser/src/postgresql-clean/
+$ ckck
+Matching checkpoints:
+default              = /home/juser/src/postgresql-current/src/backend/optimizer/plan
+pg                   = /home/juser/src/postgresql-clean
+plan                 = /home/juser/src/postgresql-current/src/backend/optimizer/plan
+py                   = /home/juser/src/py3k
+ckpt                 = /home/juser/src/BASH-Directory-Checkpointsq
+$ ckck p*
+Matching checkpoints:
+pg                   = /home/juser/src/postgresql-clean
+plan                 = /home/juser/src/postgresql-current/src/backend/optimizer/plan
+py                   = /home/juser/src/py3k
+$ delck plan
+$ ^D
+
+Open new terminal
+$ gock plan
+Currently in /home/juser/src/postgresql-current/src/backend/optimizer/plan
+
+ENV VARS:
+CKDIR
+    Directory to save your checkpoints in.  Defaults to ~/.ck
+CKDEFAULT_TAG
+    The name of the default tag.
+CKBOUNCE_TAG
+    The name of the bounce tag - defaults to bounce.  This behaves similarly to cd -, but for tags
+    export CKBOUNCE_TAG=
